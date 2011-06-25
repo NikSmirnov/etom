@@ -1,8 +1,6 @@
 package ru.concerteza.etomcat;
 
 
-import org.apache.catalina.LifecycleException;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -14,7 +12,8 @@ public class Launcher {
 
     public static void main(String[] args) throws Exception {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("/etomcat-ctx.xml");
-		if (!ctx.getBean(EmbeddedTomcat.class).start()) {
+		EmbeddedTomcat bean = (EmbeddedTomcat) ctx.getBean("eTomcat");
+		if (!bean.start()) {
 		  return;	
 		}
 

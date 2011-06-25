@@ -26,14 +26,18 @@ import org.apache.catalina.Container;
 @Service
 public class EmbeddedTomcat {
 
-	protected String contextClass = "org.apache.catalina.core.StandardContext";
+	private final String contextClass = "org.apache.catalina.core.StandardContext";
+	private int port = 8080;
+	private String springApp = "";
+	private String defaultHostName = "";
+	private String hostName = "";
 
 	public boolean start() throws Exception {
 		System.setProperty("catalina.home", ".");
 		Embedded embedded = new Embedded();
 		Engine engine = embedded.createEngine();
-		engine.setDefaultHost("localhost");
-		Host host = embedded.createHost("localhost", "webapps");
+		engine.setDefaultHost(defaultHostName);
+		Host host = embedded.createHost(defaultHostName, hostName);
 		engine.addChild(host);
 
 		Context springContext = (Context) Class.forName(contextClass)
@@ -44,12 +48,12 @@ public class EmbeddedTomcat {
 					.newInstance();
 			((Lifecycle) springContext).addLifecycleListener(listener);
 		}
-		springContext.setPath("/airplane");
-		springContext.setDocBase("airplane");
+		springContext.setPath("/" + springApp);
+		springContext.setDocBase(springApp);
 		host.addChild(springContext);
 
 		embedded.addEngine(engine);
-		Connector connector = embedded.createConnector((String) null, 8080,
+		Connector connector = embedded.createConnector((String) null, port,
 				false);
 		connector.setURIEncoding("UTF-8");
 		embedded.addConnector(connector);
@@ -60,5 +64,37 @@ public class EmbeddedTomcat {
 
 	public void stop() {
 		// todo
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public void setSpringApp(String springApp) {
+		this.springApp = springApp;
+	}
+
+	public String getSpringApp() {
+		return springApp;
+	}
+
+	public void setDefaultHostName(String defaultHostName) {
+		this.defaultHostName = defaultHostName;
+	}
+
+	public String getDefaultHostName() {
+		return defaultHostName;
+	}
+
+	public String getHostName() {
+		return hostName;
+	}
+
+	public void setHostName(String hostName) {
+		this.hostName = hostName;
 	}
 }
