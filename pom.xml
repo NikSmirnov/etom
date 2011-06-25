@@ -48,11 +48,6 @@
         </dependency>   
         <dependency>
             <groupId>tomcat</groupId>
-            <artifactId>commons-el</artifactId>
-            <version>5.5.23</version>
-        </dependency>           
-        <dependency>
-            <groupId>tomcat</groupId>
             <artifactId>jsp-api</artifactId>
             <version>5.5.23</version>
         </dependency>                   
