@@ -28,9 +28,9 @@ public class EmbeddedTomcat {
 
 	private final String contextClass = "org.apache.catalina.core.StandardContext";
 	private int port = 8080;
-	private String springApp = "";
-	private String defaultHostName = "";
-	private String hostName = "";
+	private String springApp = "airplane";
+	private String defaultHostName = "localhost";
+	private String hostName = "webapps";
 
 	public boolean start() throws Exception {
 		System.setProperty("catalina.home", ".");
